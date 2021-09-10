@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.scss";
 import ButtonPad from "./components/ButtonPad";
 import Display from "./components/Display";
@@ -7,16 +7,16 @@ import Display from "./components/Display";
 
 Adapted some code and functions from WebDev Simplified's Javascript Calculator
 https://github.com/WebDevSimplified/Vanilla-JavaScript-Calculator/blob/master/script.js
-(Also fixed some of it's issues)
+(Also fixed some of it's issues such as divide by zero and not resetting the input if a current result is being viewed)
 
 */
 
 const INIT = "0";
 
 function App() {
-  const [display, setDisplay] = useState(INIT);
-  const [history, setHistory] = useState(INIT);
-  const [displayOperator, setDisplayOperator] = useState(undefined);
+  // const [display, setDisplay] = useState(INIT);
+  // const [history, setHistory] = useState(INIT);
+  // const [displayOperator, setDisplayOperator] = useState(undefined);
   const [operand1, setOperand1] = useState(INIT);
   const [operand2, setOperand2] = useState(INIT);
   const [operator, setOperator] = useState(undefined);
@@ -25,12 +25,12 @@ function App() {
   const handleClick = (type, text) => {
     switch (type) {
       case "clear":
-        setHistory(INIT);
-        setDisplay(INIT);
+        // setHistory(INIT);
+        // setDisplay(INIT);
         setOperand1(INIT);
         setOperand2(INIT);
         setOperator(undefined);
-        setDisplayOperator(undefined);
+        // setDisplayOperator(undefined);
         return;
       case "digit":
         getOperand(text);
@@ -52,7 +52,17 @@ function App() {
   let currentResult = 0;
 
   const handleOperator = (ops) => {
-    if (operand2 === INIT) return;
+    if (ops === "-" && operand2 === INIT) {
+      getOperand(ops);
+      return;
+    }
+    if (ops === "+" && operand2 === "-") {
+      setOperand2(INIT);
+    }
+    if (operator !== undefined) {
+      setOperator(ops);
+    }
+    if (operand2 === INIT || operand2 === "-") return;
     if (operand1 !== INIT) {
       calculate();
     }
@@ -99,6 +109,7 @@ function App() {
       setDisplayingResults(false);
       return;
     }
+
     if (currentDigit === "." && operand2.includes(".")) {
       return;
     } else if (currentDigit === "0" && operand2 === "0") {
@@ -112,6 +123,9 @@ function App() {
   };
 
   const getDisplayNumber = (number) => {
+    if (number === "-") {
+      return number;
+    }
     const stringNumber = number.toString();
     const integerDigits = parseFloat(stringNumber.split(".")[0]);
     const decimalDigits = stringNumber.split(".")[1];
@@ -130,22 +144,26 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    const updateDisplay = () => {
-      setDisplay(getDisplayNumber(operand2));
-      if (operator !== null) {
-        setHistory(getDisplayNumber(operand1));
-        setDisplayOperator(operator);
-      } else {
-        setHistory(INIT);
-      }
-    };
-    updateDisplay();
-  }, [operand1, operand2, operator]);
+  // useEffect(() => {
+  //   const updateDisplay = () => {
+  //     setDisplay(getDisplayNumber(operand2));
+  //     if (operator !== null) {
+  //       setHistory(getDisplayNumber(operand1));
+  //       setDisplayOperator(operator);
+  //     } else {
+  //       setHistory(INIT);
+  //     }
+  //   };
+  //   updateDisplay();
+  // }, [operand1, operand2, operator]);
 
   return (
     <div className='app'>
-      <Display display={display} history={history} operator={displayOperator} />
+      <Display
+        display={getDisplayNumber(operand2)}
+        history={getDisplayNumber(operand1)}
+        operator={operator}
+      />
       <ButtonPad handler={handleClick} />
     </div>
   );
