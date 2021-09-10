@@ -7,7 +7,9 @@ function Display(props) {
         <p className='history'>
           {props.history} {props.operator}
         </p>
-        <p className='display'>{props.display}</p>
+        <p className='display' id='display'>
+          {props.display}
+        </p>
       </div>
     </>
   );
