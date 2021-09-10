@@ -3,7 +3,7 @@ import React from "react";
 const buttonObj = [
   {
     btnId: "clear",
-    style: "button",
+    style: "button clear",
     text: "AC",
     type: "clear",
   },

@@ -56,7 +56,7 @@ function App() {
       getOperand(ops);
       return;
     }
-    if (ops === "+" && operand2 === "-") {
+    if (ops !== "-" && operand2 === "-") {
       setOperand2(INIT);
     }
     if (operator !== undefined) {
