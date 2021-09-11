@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./App.scss";
 import ButtonPad from "./components/ButtonPad";
 import Display from "./components/Display";
@@ -21,6 +21,7 @@ function App() {
   const [operand2, setOperand2] = useState(INIT);
   const [operator, setOperator] = useState(undefined);
   const [displayingResults, setDisplayingResults] = useState(false);
+  const total = useRef(0);
 
   const handleClick = (type, text) => {
     switch (type) {
@@ -30,6 +31,7 @@ function App() {
         setOperand1(INIT);
         setOperand2(INIT);
         setOperator(undefined);
+        total.current = 0;
         // setDisplayOperator(undefined);
         return;
       case "digit":
@@ -40,6 +42,7 @@ function App() {
         if (operator !== undefined) {
           setDisplayingResults(true);
         }
+        total.current = 0;
         return;
       case "operator":
         handleOperator(text);
@@ -48,8 +51,6 @@ function App() {
         return;
     }
   };
-
-  let currentResult = 0;
 
   const handleOperator = (ops) => {
     if (ops === "-" && operand2 === INIT) {
@@ -67,10 +68,10 @@ function App() {
       calculate();
     }
     setOperator(ops);
-    if (currentResult === 0) {
+    if (total.current === 0) {
       setOperand1(operand2);
     } else {
-      setOperand1(currentResult);
+      setOperand1(total.current);
     }
     setOperand2(INIT);
   };
@@ -97,8 +98,8 @@ function App() {
         return;
     }
 
-    currentResult = result;
-    setOperand2(currentResult);
+    total.current = result;
+    setOperand2(total.current);
     setOperator(undefined);
     setOperand1(INIT);
   };
@@ -158,14 +159,19 @@ function App() {
   // }, [operand1, operand2, operator]);
 
   return (
-    <div className='app'>
-      <Display
-        display={getDisplayNumber(operand2)}
-        history={getDisplayNumber(operand1)}
-        operator={operator}
-      />
-      <ButtonPad handler={handleClick} />
-    </div>
+    <>
+      <div className='app'>
+        <Display
+          display={getDisplayNumber(operand2)}
+          history={getDisplayNumber(operand1)}
+          operator={operator}
+        />
+        <ButtonPad handler={handleClick} />
+      </div>
+      <p>
+        Coded by <a href='http://www.kingwell47.com'>Joel P. Doctor</a>
+      </p>
+    </>
   );
 }
 
