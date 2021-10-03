@@ -169,7 +169,10 @@ function App() {
         <ButtonPad handler={handleClick} />
       </div>
       <p>
-        Coded by <a href='http://www.kingwell47.com'>Joel P. Doctor</a>
+        Coded by{" "}
+        <a href='https://www.joeldoctor.com' rel='noreferrer' target='_blank'>
+          Joel P. Doctor
+        </a>
       </p>
     </>
   );
