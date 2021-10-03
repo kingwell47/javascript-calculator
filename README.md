@@ -7,6 +7,7 @@ This is a solution to the [Build a JavaScript Calculator project](https://www.fr
 ## Table of contents
 
 - [Overview](#overview)
+  - [The challenge](#the-challenge)
   - [Screenshot](#screenshot)
   - [Links](#links)
 - [My process](#my-process)
@@ -18,6 +19,22 @@ This is a solution to the [Build a JavaScript Calculator project](https://www.fr
 - [Acknowledgments](#acknowledgments)
 
 ## Overview
+
+### The challenge
+
+Users should be able to:
+
+- At any time, pressing the `clear` button clears the input and output values, and returns the calculator to its initialized state; 0 should be shown in the element with the id of `display`.
+- In any order, users should be able to add, subtract, multiply and divide a chain of numbers of any length, and when they hit `=`, the correct result should be shown in the element with the id of `display`.
+- Users should be able to perform any operation (+, -, \*, /) on numbers containing decimal points.
+- When the decimal element is clicked, a `.` should append to the currently displayed value; two `.` in one number should not be accepted.
+- If 2 or more operators are entered consecutively, the operation performed should be the last operator entered (excluding the negative (`-`) sign). For example, if `5 + * 7 =` is entered, the result should be `35` (i.e. `5 * 7`); if `5 * - 5 =` is entered, the result should be `-25` (i.e. `5 * (-5)`).
+- Pressing an operator immediately following `=` should start a new calculation that operates on the result of the previous evaluation.
+
+Additional things I did:
+
+- The calculator is designed to resemble a keyboard keypad.
+- Users can enter numbers using their keyboard keypad.
 
 ### Screenshot
 
